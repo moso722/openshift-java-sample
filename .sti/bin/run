@@ -2,6 +2,6 @@
 
 DEPLOY_DIR="/opt/openshift/app"
 JAVA_MAIN="Main"
-CLASSPATH="$DEPLOY_DIR/target/classes:$DEPLOY_DIR/target/dependency/*"
+CLASSPATH="$DEPLOY_DIR/classes:$DEPLOY_DIR/dependency/*"
 
 java -cp $CLASSPATH $JAVA_MAIN
