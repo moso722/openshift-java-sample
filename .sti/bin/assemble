@@ -15,6 +15,7 @@ DEPLOY_DIR=/opt/openshift/app
 mkdir -p $DEPLOY_DIR
 
 # Copy the source for compilation
+ls -l /opt/openshift/destination
 cp -ad /opt/openshift/destination/* $LOCAL_SOURCE_DIR
 
 # If a pom.xml is present, this is a normal build scenario
