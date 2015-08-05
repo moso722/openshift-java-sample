@@ -1,19 +1,5 @@
 #!/bin/bash
 
-# restore maven dependencies downloaded in a previous build,
-# so they do not have to be downloaded again.
-# /tmp/artifacts will only be present in the incremental build scenario
-# in which the target image name is an existing docker image which contains
-# dependencies from a prior build execution.
-function restore_saved_artifacts() {
-  if [ -d /tmp/artifacts/ ]; then
-    echo -n "Restoring saved artifacts from prior build..."
-    mv /tmp/artifacts/.m2 $HOME/.
-  else 
-    echo -n "Can't find saved artifacts. Ignoring..."
-  fi
-}
-
 # Source code provided to STI is at ${HOME}/source
 LOCAL_SOURCE_DIR=${HOME}/source
 mkdir -p $LOCAL_SOURCE_DIR
@@ -25,19 +11,15 @@ elif [[ $OUTPUT_DIR != /* ]]; then
   export OUTPUT_DIR="$LOCAL_SOURCE_DIR/$OUTPUT_DIR"
 fi
 
-# Output will result in /opt/app/deploy folder
-DEPLOY_DIR=/app
+DEPLOY_DIR=/opt/openshift/app
 mkdir -p $DEPLOY_DIR
 
 # Copy the source for compilation
-cp -ad /tmp/src/* $LOCAL_SOURCE_DIR
+cp -ad /opt/openshift/destination/* $LOCAL_SOURCE_DIR
 
 # If a pom.xml is present, this is a normal build scenario
 # so run maven.
 if [ -f "$LOCAL_SOURCE_DIR/pom.xml" ]; then
-  # restore any maven dependencies which will be present if this is an
-  # incremental build
-  restore_saved_artifacts
 
   pushd $LOCAL_SOURCE_DIR &> /dev/null
   JAVA_HOME=/etc/alternatives/java_sdk_1.7.0

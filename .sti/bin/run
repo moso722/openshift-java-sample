@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DEPLOY_DIR="/app"
+DEPLOY_DIR="/opt/openshift/app"
 
 pushd ${DEPLOY_DIR} > /dev/null
 APP_JAR=`ls *.jar`
