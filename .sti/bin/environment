@@ -1,3 +1,0 @@
-# The environment variable for this application
-PORT=8080
-JAVA_MAIN=Main
